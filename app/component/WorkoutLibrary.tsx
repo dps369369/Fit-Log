@@ -1,4 +1,9 @@
-export default function WorkoutLibrary() {
+import { getWorkouts } from "../lib/api";
+import WorkoutCard from "./WorkoutCard";
+
+export default async function WorkoutLibrary() {
+  const workouts = await getWorkouts();
+
   return (
     <section id="library" className="px-6 py-16 text-white">
       <div className="mb-10">
@@ -12,10 +17,9 @@ export default function WorkoutLibrary() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-xl border border-zinc-800 p-6">
-          <h3 className="text-xl font-bold">Workout Card</h3>
-          <p className="mt-2 text-zinc-400">API workout will appear here.</p>
-        </div>
+        {workouts.map((workout) => (
+          <WorkoutCard key={workout.id} workout={workout} />
+        ))}
       </div>
     </section>
   );
